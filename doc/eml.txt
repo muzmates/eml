@@ -1,0 +1,22 @@
+Score title='Песенка крокодила Гены'
+      music='В. Шаинский'
+      tuning='Guitar standard tuning' [
+   Row type='measure' [
+      Bar leftType='single'.
+
+      Column [
+         Note beamDirection='up'
+              type='quarter'
+              location=0.5
+              bar='start'.
+      ]
+
+      Column [
+         Note beamDirection='up' type='quarter' location=0 bar='end'.
+      ]
+
+      Bar rightType='single'.
+   ]	
+]
+
+
