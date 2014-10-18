@@ -6,6 +6,7 @@
 module Eml.Input.EmlSyn where
 
 import Text.Printf
+import Eml.Types
 import Eml.Input.EmlLex (token_posn, Token(..), AlexPosn(..))
 }
 
@@ -28,7 +29,7 @@ import Eml.Input.EmlLex (token_posn, Token(..), AlexPosn(..))
 Item     : id Attrs Children      { Item $1 $2 $3 }
 Attrs    : {- empty -}            { [] }
          | Pair Attrs             { $1 : $2 }
-Pair     : id '=' Value           { ($1, $3) }
+Pair     : id '=' Value           { Pair $1 $3 }
 Value    : number                 { DoubleValue $1 }
          | string                 { StringValue $1 }
          | Children               { ListValue $1 }
@@ -38,16 +39,6 @@ ChildExp : {- empty -}            { [] }
 ChildExp : Item ChildExp          { $1 : $2 }
 
 {
-
-type Pair = (String, Value)
-
-data Item = Item String [Pair] [Item]
-     deriving (Eq, Show)
-
-data Value = StringValue String |
-             DoubleValue Double |
-             ListValue [Item]
-             deriving (Eq, Show)
 
 parseError :: [Token] -> a
 parseError t = error $ errMsg (line pos) (col pos)

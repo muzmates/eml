@@ -1,5 +1,5 @@
 Score title='Песенка крокодила Гены'
-      music='В. Шаинский'
+      musicBy='В. Шаинский'
       tuning='Guitar standard tuning' [
    Row type='measure' [
       Bar leftType='single'.

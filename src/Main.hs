@@ -2,10 +2,11 @@
 -- Max E. Kuznetsov <mek@mek.uz.ua> 2014
 --
 
-import Eml.Input.EmlLex
-import Eml.Input.EmlSyn
+import Eml.Input.EmlLex (alexScanTokens)
+import Eml.Input.EmlSyn (parse)
+import Eml.Output.Js (render)
 
 main = do
      s <- getContents
 
-     print $ parse $ alexScanTokens s
+     putStrLn . render . parse $ alexScanTokens s
