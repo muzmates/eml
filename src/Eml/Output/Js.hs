@@ -26,15 +26,33 @@ instance JsRenderable T.Value where
     renderJs (T.ListValue v) = "[" ++ joinList "," (map renderJs v) ++ "]"
 
 instance JsRenderable T.Item where
+    renderJs (T.Item name [] []) = printf tpl name
+        where
+          tpl = "new Euterpe.%s({})"
+
+    renderJs (T.Item name [] items) = printf tpl name (renderItems items)
+        where
+          tpl = "new Euterpe.%s({items:%s})"
+
+    renderJs (T.Item name pairs []) = printf tpl name (renderPairs pairs)
+        where
+          tpl = "new Euterpe.%s({%s})"
+
     renderJs (T.Item name pairs items) = printf tpl name rp ritems
         where
-          tpl = "new Euterpe.%s({%s,items=%s})"
-          rp = joinList "," $ map renderJs pairs
-          ritems = "[" ++ joinList "," (map renderJs items) ++ "]"
+          tpl = "new Euterpe.%s({%s,items:%s})"
+          rp = renderPairs pairs
+          ritems = renderItems items
 
+renderPairs pairs = joinList "," $ map renderJs pairs
+renderItems items = "[" ++ joinList "," (map renderJs items) ++ "]"
 joinList = intercalate 
 
 -- Render item
 render :: JsRenderable a => a -> String
 
-render item = renderJs item
+render item = printf tpl (renderJs item)
+    where
+      tpl = "function renderScore(width, scale, x, y, canvasId) {var root=%s;\
+            \var stage=Euterpe.render(root,x,y,width,scale,canvasId);\
+            \stage.draw();};"

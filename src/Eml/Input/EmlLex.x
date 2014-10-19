@@ -15,7 +15,7 @@ tokens :-
 
        $white+                    ;
        \#.*                       ;
-       [\=\.\[\]\,]               { tok (\p s -> Symbol p (head s)) }
+       [\=\.\[\]\,\;]             { tok (\p s -> Symbol p (head s)) }
        $digit+\.$digit+           { tok (\p s -> Number p (read s)) }
        $digit+                    { tok (\p s -> Number p (read s)) }
        $alpha [$alpha $digit \_]* { tok (\p s -> Id p s) }
