@@ -20,6 +20,7 @@ import Eml.Input.EmlLex (token_posn, Token(..), AlexPosn(..))
        '['       { Symbol _ '[' }
        ']'       { Symbol _ ']' }
        ';'       { Symbol _ ';' }
+       '-'       { Symbol _ '-' }
         number   { Number _ $$ }
         id       { Id _ $$ }
         string   { StrLiteral _ $$ }
@@ -31,6 +32,7 @@ Attrs    : {- empty -}            { [] }
          | Pair Attrs             { $1 : $2 }
 Pair     : id '=' Value           { Pair $1 $3 }
 Value    : number                 { DoubleValue $1 }
+         | '-' number             { DoubleValue (-$2) }
          | string                 { StringValue $1 }
          | Children               { ListValue $1 }
 Children : ';'                    { [] }
