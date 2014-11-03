@@ -19,7 +19,6 @@ cabal-version:       >=1.10
 executable eml
   main-is:             Main.hs
   other-modules:       Eml.Input.EmlLex, Eml.Input.EmlSyn
-  -- other-extensions:    
   ghc-options:         -W
   build-depends:       base >=4.7 && <4.8, array
   hs-source-dirs:      src
